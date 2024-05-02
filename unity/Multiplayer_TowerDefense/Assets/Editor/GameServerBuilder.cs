@@ -23,7 +23,8 @@ public class GameServerBuilder
                 },
                 locationPathName = buildLocationPathName,
                 target = BuildTarget.StandaloneLinux64,
-                options = BuildOptions.EnableHeadlessMode | BuildOptions.Development
+                options =  BuildOptions.Development,
+                subtarget = (int)StandaloneBuildSubtarget.Server
             }
         );
         if (report.summary.result != BuildResult.Succeeded)
