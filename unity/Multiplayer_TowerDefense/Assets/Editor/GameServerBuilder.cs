@@ -3,35 +3,37 @@ using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
-public class GameServerBuilder
+namespace Editor
 {
-    [MenuItem("Build/Build Linux Game Server")]
-    public static void BuildLinuxGameServer()
+    public static class GameServerBuilder
     {
-        string buildDirectory = Path.Combine("Builds", "GameServer");
-        if (!Directory.Exists(buildDirectory))
-            Directory.CreateDirectory(buildDirectory);
-        PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.IL2CPP);
-        PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Standalone, ApiCompatibilityLevel.NET_2_0);
-        var buildLocationPathName = Path.Combine(buildDirectory, "multiplayer_tower_defense.x86_64");
-        BuildReport report = BuildPipeline.BuildPlayer(
-            new BuildPlayerOptions
-            {
-                scenes = new[]
-                {
-                    "Assets/Scenes/MultiplayerTowerDefense.unity"
-                },
-                locationPathName = buildLocationPathName,
-                target = BuildTarget.StandaloneLinux64,
-                options =  BuildOptions.Development,
-                subtarget = (int)StandaloneBuildSubtarget.Server
-            }
-        );
-        if (report.summary.result != BuildResult.Succeeded)
+        private static readonly string[] GameScenes =
         {
-            Debug.LogError($"{report.summary.result} Server build failed with the following details: {report.summary}");
-            return;
+            "Assets/Scenes/MultiplayerTowerDefense.unity"
+        };
+        private static readonly string LinuxGameServerBuildDirectory = Path.Combine("Builds", "GameServer");
+        private static readonly string LinuxGameServerBin = "multiplayer_tower_defense.x86_64";
+[MenuItem("Build/Build Linux Game Server")]
+public static void BuildLinuxGameServer()
+{
+    if (!Directory.Exists(LinuxGameServerBuildDirectory))
+        Directory.CreateDirectory(LinuxGameServerBuildDirectory);
+    var report = BuildPipeline.BuildPlayer(
+        new BuildPlayerOptions
+        {
+            scenes = GameScenes,
+            locationPathName = Path.Combine(LinuxGameServerBuildDirectory, LinuxGameServerBin),
+            target = BuildTarget.StandaloneLinux64,
+            subtarget = (int)StandaloneBuildSubtarget.Server,
+            options =  BuildOptions.Development // currently this is the only way to see logging(?)
         }
-        Debug.Log("Server build succeeded and is located at: " + buildLocationPathName);
+    );
+    if (report.summary.result != BuildResult.Succeeded)
+    {
+        Debug.LogError($"{report.summary.result} Server build failed with the following details: {report.summary}");
+        return;
+    }
+    Debug.Log("Server build succeeded and is located at: " + Path.Combine(LinuxGameServerBuildDirectory, LinuxGameServerBin));
+}
     }
 }
