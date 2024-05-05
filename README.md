@@ -8,5 +8,19 @@ Goal: provide proof of a multiplayer game server (unity) running inside a contai
 ### Useful command snippets
 ```bash
 # build and run the game server container
-docker run --platform linux/amd64 -it --rm $(docker buildx build -q --platform linux/amd64 -f $(git rev-parse --show-toplevel)/unity/Multiplayer_TowerDefense/LinuxGameServer.Dev.Dockerfile $(git rev-parse --show-toplevel)/unity/Multiplayer_TowerDefense)
+dockerfile=$(git rev-parse --show-toplevel)/unity/Multiplayer_TowerDefense/LinuxGameServer.Dev.Dockerfile
+build_context=$(git rev-parse --show-toplevel)/unity/Multiplayer_TowerDefense
+docker run \
+  --platform linux/amd64 \
+  --interactive \
+  --tty \
+  --rm \
+  $(docker buildx build \
+    --platform linux/amd64 \
+    --quiet \
+    --file $dockerfile \
+    $build_context)
 ```
+
+### M2 Macbook Pro Observations
+- when running `docker` commands, it's important to add `--platform linux/amd64`. If this does not happen for both the `docker run` and `docker buildx build` commands the container will not run the unity game server properly, complaining about qemu issues.

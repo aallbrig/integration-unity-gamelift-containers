@@ -13,8 +13,9 @@ namespace Editor
         };
         private static readonly string LinuxGameServerBuildDirectory = "GameServer";
         private static readonly string LinuxGameServerBin = "multiplayer_tower_defense.x86_64";
-        private static readonly string ProdLinuxGameServerBuildDirectory = Path.Combine("Builds", "Prod", LinuxGameServerBuildDirectory);
-        private static readonly string DevLinuxGameServerBuildDirectory = Path.Combine("Builds", "Dev", LinuxGameServerBuildDirectory);
+        private static readonly string DevLinuxGameServerBuildDirectory = Path.Combine("Builds", LinuxGameServerBuildDirectory, "Dev");
+        private static readonly string DebugLinuxGameServerBuildDirectory = Path.Combine("Builds", LinuxGameServerBuildDirectory, "Debug");
+        private static readonly string ProdLinuxGameServerBuildDirectory = Path.Combine("Builds",LinuxGameServerBuildDirectory, "Prod");
         [MenuItem("Build/Build Linux Game Server (Dev)")]
         public static void BuildLinuxGameServerDev()
         {
@@ -36,6 +37,29 @@ namespace Editor
                 return;
             }
             Debug.Log("Server build succeeded and is located at: " + Path.Combine(LinuxGameServerBuildDirectory, LinuxGameServerBin));
+        }
+        [MenuItem("Build/Build Linux Game Server (Dev Debugging enabled)")]
+        public static void BuildLinuxGameServerDevDebugging()
+        {
+            if (!Directory.Exists(DevLinuxGameServerBuildDirectory))
+                Directory.CreateDirectory(DevLinuxGameServerBuildDirectory);
+            var locationPathName = Path.Combine(DebugLinuxGameServerBuildDirectory, LinuxGameServerBin);
+            var report = BuildPipeline.BuildPlayer(
+                new BuildPlayerOptions
+                {
+                    scenes = GameScenes,
+                    locationPathName = locationPathName,
+                    target = BuildTarget.StandaloneLinux64,
+                    subtarget = (int)StandaloneBuildSubtarget.Server,
+                    options =  BuildOptions.Development | BuildOptions.AllowDebugging | BuildOptions.WaitForPlayerConnection
+                }
+            );
+            if (report.summary.result != BuildResult.Succeeded)
+            {
+                Debug.LogError($"{report.summary.result} Server build failed with the following details: {report.summary}");
+                return;
+            }
+            Debug.Log($"Server build succeeded and is located at: {locationPathName}");
         }
         [MenuItem("Build/Build Linux Game Server (Prod)")]
         public static void BuildLinuxGameServerProd()
