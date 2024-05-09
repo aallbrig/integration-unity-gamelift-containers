@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
+source $(git rev-parse --show-toplevel)/scripts/lib/assertions.sh
 
-function pass() {
-  printf "✅ $1\n"
-}
-function fail() {
-  printf "❌ $1\n"
-  exit 1
-}
 function __cleanup_running_test_containers(){
   tag_name=$1
   containers_with_label=$(docker ps -aq -f label=test_label)

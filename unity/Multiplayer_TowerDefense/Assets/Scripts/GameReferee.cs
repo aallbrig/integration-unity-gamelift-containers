@@ -1,6 +1,7 @@
+using Mirror;
 using UnityEngine;
 
-public class GameReferee : MonoBehaviour
+public class GameReferee : NetworkBehaviour
 {
     void Start()
     {

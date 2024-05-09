@@ -1,0 +1,24 @@
+version: 1
+LastOpenTab: Anywhere
+CurrentProfileName: default
+CurrentRegion: us-east-2
+UserProfiles: >
+  - Region: us-east-2
+    Name: default
+    BucketName: gamelift-bootstrap-702353326783-us-east-2
+    AnywhereFleetName: GameName-AnywhereFleet-Testing
+    AnywhereFleetId: fleet-01a2ee03-06d8-4218-82fb-7f0d3f0c6f34
+    AnywhereFleetLocation: custom-location-1
+    ComputeName: ComputerName-ProfileName-Test
+    IpAddress: 127.0.0.1
+    WebSocketUrl: wss://us-east-2.api.amazongamelift.com
+    DeploymentScenario: SingleRegion
+    DeploymentGameName: 
+    ManagedEC2FleetName: 
+    BuildName: 
+    LaunchParameters: 
+    BuildOperatingSystem: 
+    DeploymentBuildFilePath: 
+    DeploymentBuildFolderPath: 
+CurrentBucketName: gamelift-bootstrap-702353326783-us-east-2
+...

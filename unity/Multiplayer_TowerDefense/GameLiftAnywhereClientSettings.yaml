@@ -1,0 +1,6 @@
+version: 1
+CurrentRegion: us-east-2
+FleetId: fleet-01a2ee03-06d8-4218-82fb-7f0d3f0c6f34
+FleetLocation: custom-location-1
+CurrentProfileName: default
+...
