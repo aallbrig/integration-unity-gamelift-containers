@@ -1,9 +1,9 @@
 version: 1
 LastOpenTab: Anywhere
 CurrentProfileName: default
-CurrentRegion: us-east-2
+CurrentRegion: us-east-1
 UserProfiles: >
-  - Region: us-east-2
+  - Region: us-east-1
     Name: default
     BucketName: gamelift-bootstrap-702353326783-us-east-2
     AnywhereFleetName: GameName-AnywhereFleet-Testing
