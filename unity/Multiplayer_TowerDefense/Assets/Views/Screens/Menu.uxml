@@ -4,9 +4,13 @@
     xmlns:engine="UnityEngine.UIElements"
     xmlns:editor="UnityEditor.UIElements"
 >
-    <engine:VisualElement style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; flex-direction: column; justify-content: center; align-items: center;">
+    <engine:VisualElement class="fullscreen_menu">
         <engine:Label text="Tower Defense" />
         <engine:Label text="multiplayer" />
-        <engine:Button name="client-connect-localhost-game-server" text="Connect to localhost" />
+        <engine:Button name="btn_quick_play" class="menu_button" text="Quick play" focusable="true" />
+        <engine:Button name="btn_find_a_game" class="menu_button" text="Find a game" focusable="true" />
+        <engine:Button name="btn_server_browser" class="menu_button" text="Server browser" focusable="true" />
+        <engine:Button name="btn_settings" class="menu_button" text="Settings" focusable="true" />
+        <!-- <engine:Button name="client-connect-localhost-game-server" text="Connect to localhost" focusable="true" /> -->
     </engine:VisualElement>
 </engine:UXML>
